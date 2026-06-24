@@ -1,0 +1,6 @@
+@ShopoMall_HostAddress = http://localhost:5017
+
+GET {{ShopoMall_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
