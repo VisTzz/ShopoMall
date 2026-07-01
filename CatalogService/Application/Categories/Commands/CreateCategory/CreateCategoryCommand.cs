@@ -1,4 +1,6 @@
-﻿namespace CatalogService.Application.Categories.Commands.CreateCategory
+﻿using MediatR;
+
+namespace CatalogService.Application.Categories.Commands.CreateCategory
 {
-    public record CreateCategoryCommand(string Name, Guid? ParentId);
+    public record CreateCategoryCommand(string Name, Guid? ParentId) : IRequest<Guid>;
 }

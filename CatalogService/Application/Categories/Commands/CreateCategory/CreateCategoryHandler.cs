@@ -1,9 +1,10 @@
 ﻿using CatalogService.Domain.Entities;
 using CatalogService.Domain.Repositories;
+using MediatR;
 
 namespace CatalogService.Application.Categories.Commands.CreateCategory
 {
-    public class CreateCategoryHandler
+    public class CreateCategoryHandler : IRequestHandler<CreateCategoryCommand, Guid>
     {
         private readonly ICategoryRepository _categoryRepository;
 

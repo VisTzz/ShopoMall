@@ -1,5 +1,7 @@
-﻿using CatalogService.Application.Categories.Commands.CreateCategory;
+using CatalogService.Application.Categories.Commands.CreateCategory;
 using CatalogService.Application.Categories.Queries;
+using CatalogService.Application.Categories.Queries.GetAllCategories;
+using CatalogService.Application.Common.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +12,8 @@ namespace CatalogService.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public CategoriesController (IMediator mediator)
+
+        public CategoriesController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -25,23 +28,28 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("{id:guid}")]
-
-        public async Task<ActionResult<CategoryDto>> GetById(Guid Id, CancellationToken ct)
+        public async Task<ActionResult<CategoryDTO>> GetById(Guid id, CancellationToken ct)
         {
             try
             {
-                var query = new GetCategoryByIdQuery(Id);
+                var query = new GetCategoryByIdQuery(id);
                 var result = await _mediator.Send(query, ct);
-
                 return Ok(result);
-            } catch (KeyNotFoundException)
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-
         }
 
-        public record CreateCategoryRequest(string Name, Guid? ParentId);
-        public record CategoryDto(Guid Id, string Name);
+        [HttpGet]
+        public async Task<ActionResult<List<CategoryDTO>>> GetAll(CancellationToken ct)
+        {
+            var query = new GetAllCategoriesQuery();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
+        }
     }
+
+    public record CreateCategoryRequest(string Name, Guid? ParentId);
 }

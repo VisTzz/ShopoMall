@@ -1,4 +1,4 @@
-﻿using CatalogService.Domain.Exceptions;
+using CatalogService.Domain.Exceptions;
 
 namespace CatalogService.Domain.Entities
 {

@@ -1,8 +1,10 @@
-﻿using CatalogService.Domain.Repositories;
+using CatalogService.Application.Common.DTOs;
+using CatalogService.Domain.Repositories;
+using MediatR;
 
 namespace CatalogService.Application.Categories.Queries
 {
-    public class GetCategoryByIdHandler
+    public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, CategoryDTO>
     {
         private readonly ICategoryRepository _repository;
 
@@ -11,7 +13,7 @@ namespace CatalogService.Application.Categories.Queries
             _repository = repository;
         }
 
-        public async Task<CategoryDTO> Handle (GetCategoryByIdQuery query, CancellationToken ct)
+        public async Task<CategoryDTO> Handle(GetCategoryByIdQuery query, CancellationToken ct)
         {
             var category = await _repository.GetCategoryByIdAsync(query.Id, ct);
 
@@ -20,9 +22,7 @@ namespace CatalogService.Application.Categories.Queries
                 throw new KeyNotFoundException($"Category with {query.Id} does not exist");
             }
 
-                return new CategoryDTO(category.Name, category.Id);
+            return new CategoryDTO(category.Id, category.Name);
         }
-
-        public record CategoryDTO(string Name, Guid Id);
     }
 }
