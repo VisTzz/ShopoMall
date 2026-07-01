@@ -2,7 +2,7 @@ using CatalogService.Application.Common.DTOs;
 using CatalogService.Domain.Repositories;
 using MediatR;
 
-namespace CatalogService.Application.Categories.Queries
+namespace CatalogService.Application.Categories.Queries.GetCategoryById
 {
     public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, CategoryDTO>
     {

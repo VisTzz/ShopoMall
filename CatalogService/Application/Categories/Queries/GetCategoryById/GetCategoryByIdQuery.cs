@@ -1,7 +1,7 @@
 using CatalogService.Application.Common.DTOs;
 using MediatR;
 
-namespace CatalogService.Application.Categories.Queries
+namespace CatalogService.Application.Categories.Queries.GetCategoryById
 {
     public record GetCategoryByIdQuery(Guid Id) : IRequest<CategoryDTO>;
 }

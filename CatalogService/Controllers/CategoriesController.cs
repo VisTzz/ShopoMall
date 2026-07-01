@@ -1,7 +1,9 @@
 using CatalogService.Application.Categories.Commands.CreateCategory;
 using CatalogService.Application.Categories.Queries;
 using CatalogService.Application.Categories.Queries.GetAllCategories;
+using CatalogService.Application.Categories.Queries.GetCategoryById;
 using CatalogService.Application.Common.DTOs;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +41,10 @@ namespace CatalogService.Controllers
             catch (KeyNotFoundException)
             {
                 return NotFound();
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Errors);
             }
         }
 
