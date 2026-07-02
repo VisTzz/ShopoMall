@@ -20,16 +20,10 @@ namespace CatalogService.Application.Common.Behaviors
             var validationResults = await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
             var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
-            if (failures.Count == 0) return await next();
+            if (failures.Count == 0)
+                return await next();
 
-            var errors = failures.Select(f => new
-            {
-                Field = f.PropertyName,
-                Error = f.ErrorMessage
-            }).ToList();
-
-            // Создаём объект с ошибками и возвращаем его
-            return (TResponse)Convert.ChangeType(new { Success = false, Errors = errors }, typeof(TResponse));
+            throw new ValidationException(failures);
         }
     }
 }
